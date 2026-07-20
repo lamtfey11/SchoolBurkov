@@ -1,0 +1,16 @@
+# виртуальное окружение
+venv/
+__pycache__/
+*.pyc
+
+# сгенерированные данные (перегенерируются из main.ipynb через API)
+author_fio.json
+author_overall_vectors_sid=*.json
+author_year_vectors_sid=*.json
+clusters_*.txt
+
+# служебные файлы Jupyter
+.ipynb_checkpoints/
+
+# служебные файлы Windows/WSL при копировании файлов
+*:Zone.Identifier
