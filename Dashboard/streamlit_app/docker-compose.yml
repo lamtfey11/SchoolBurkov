@@ -1,0 +1,14 @@
+services:
+  dashboard:
+    build: .
+    image: burkov-school-dashboard:latest
+    container_name: burkov-school-dashboard
+    ports:
+      - "8501:8501"
+    restart: unless-stopped
+    # Необязательно: если хотите, чтобы папка с вашими JSON/CSV была видна
+    # внутри контейнера (например, чтобы не перезагружать их каждый раз
+    # руками через файловый загрузчик), раскомментируйте — но выгрузка
+    # через интерфейс приложения работает и без этого:
+    # volumes:
+    #   - ./data:/app/data:ro
