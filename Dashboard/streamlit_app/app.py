@@ -25,17 +25,13 @@ from data_io import (
 
 st.set_page_config(page_title="Школа Буркова — тематическая аналитика", layout="wide")
 
-# ---------------------------------------------------------------------------
 # Состояние сессии
-# ---------------------------------------------------------------------------
 for key in ("factors_by_level", "data_vectors", "data_overall", "data_fio", "sid"):
     st.session_state.setdefault(key, None)
 
 st.title("Анализ тематической структуры школы Буркова")
 
-# ---------------------------------------------------------------------------
 # Сайдбар: загрузка данных
-# ---------------------------------------------------------------------------
 with st.sidebar:
     st.header("Данные")
     source = st.radio(
@@ -105,9 +101,7 @@ with st.sidebar:
     if st.session_state.data_overall:
         st.caption(f"Авторов в данных: {len(st.session_state.data_overall)}")
 
-# ---------------------------------------------------------------------------
 # Проверка готовности данных
-# ---------------------------------------------------------------------------
 ready = all(
     st.session_state[k] for k in ("factors_by_level", "data_vectors", "data_overall", "data_fio", "sid")
 )
@@ -129,9 +123,7 @@ author_options = {
 
 tab1, tab2, tab3 = st.tabs(["Профиль автора", "Сравнение авторов", "Динамика школы"])
 
-# ---------------------------------------------------------------------------
 # Вкладка 1 — одиночный автор (аналог раздела 3.1 ноутбука)
-# ---------------------------------------------------------------------------
 with tab1:
     selected_label = st.selectbox("Автор", list(author_options.keys()), key="author_select")
     author_id = author_options[selected_label]
@@ -166,9 +158,7 @@ with tab1:
     else:
         st.caption("Недостаточно лет с данными для построения траектории (нужно минимум 2 года).")
 
-# ---------------------------------------------------------------------------
 # Вкладка 2 — сравнение авторов (аналог раздела 3.2 ноутбука)
-# ---------------------------------------------------------------------------
 with tab2:
     similarity_matrix, author_ids = an.proximity_matrix_overall(data_overall, all_topic_ids)
     labels = [an.build_fio_string(aid, data_fio) for aid in author_ids]
@@ -204,9 +194,7 @@ with tab2:
     closest = an.closest_authors(similarity_matrix, author_ids, author_id2, data_fio, top_n=n_neighbors)
     st.plotly_chart(ch.fig_closest_authors(closest), use_container_width=True)
 
-# ---------------------------------------------------------------------------
 # Вкладка 3 — динамика школы по годам (аналог раздела 3.3 ноутбука)
-# ---------------------------------------------------------------------------
 with tab3:
     all_years = [int(y) for author in data_vectors.values() for y in author.keys()]
     min_year, max_year = (min(all_years), max(all_years)) if all_years else (2000, 2025)
